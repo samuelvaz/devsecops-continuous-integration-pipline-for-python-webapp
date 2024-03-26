@@ -28,5 +28,29 @@ jobs:
       with:
         name: bandit-scan-findings
         path: py-webapp-ci-pipeline.json
-    
+
+  image_scan:
+    name: Run Docker Image Scan
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4.1.2
+
+    - name: Setup Docker
+      uses: docker-practice/actions-setup-docker@v1
+      with:
+        docker_version: '26.0'
+
+    - name: Docker Scout Scan
+      run: |
+        curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
+        sh install-scout.sh
+        echo ${{secret.docker_hub_password}} | docker login -u ${{secret.docker_hub_username}} --password-stdin
+
+        docker scout quickview
+        docker scout cves
+
+        
+        
 
