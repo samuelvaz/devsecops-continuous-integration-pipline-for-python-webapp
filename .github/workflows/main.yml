@@ -5,7 +5,7 @@ on: [push]
 jobs:
   sast_scan:
     name: Run Bandit Scan
-    runs-on: ubuntu-23.10
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
@@ -29,29 +29,29 @@ jobs:
         name: bandit-scan-findings
         path: py-webapp-ci-pipeline.json
 
-  # image_scan:
-  #  name: Build Image and Run Image Scan
-  #  runs-on: ubuntu-latest
+  image_scan:
+   name: Build Image and Run Image Scan
+   runs-on: ubuntu-23.10
 
-  #  steps:
-  #  - name: Checkout code
-  #    uses: actions/checkout@v2
+   steps:
+   - name: Checkout code
+     uses: actions/checkout@v2
 
-  #  - name: Set up Docker
-  #    uses: docker-practice/actions-setup-docker@v1
-  #    with:
-  #     docker_version: '20.10.7'
+   - name: Set up Docker
+     uses: docker-practice/actions-setup-docker@v1
+     with:
+      docker_version: '20.10.7'
 
-  #  - name: Build Docker Image
-  #    run: docker build -f Dockerfile -t webapp:latest .
+   - name: Build Docker Image
+     run: docker build -f Dockerfile -t webapp:latest .
 
-  #  - name: Docker Scout Scan
-  #    run: |
-  #      curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
-  #      sh install-scout.sh
-  #      echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-  #      docker scout quickview
-  #      docker scout cves
+   - name: Docker Scout Scan
+     run: |
+       curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
+       sh install-scout.sh
+       echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+       docker scout quickview
+       docker scout cves
 
   # image_scan:
   #   name: Run Docker Image Scan
