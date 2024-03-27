@@ -40,7 +40,7 @@ jobs:
     - name: Setup Docker
       uses: crazy-max/ghaction-setup-docker@v3.1.0
       with:
-        docker_version: '24.0.9'
+        version: '24.0.9'
 
     - name: Build Docker Image
       run: docker build -f Dockerfile -t webapp:latest .
