@@ -30,40 +30,53 @@ jobs:
         path: py-webapp-ci-pipeline.json
 
   image_scan:
-    name: Run Docker Image Scan
-    runs-on: ubuntu-latest
+   name: Build Image and Run Image Scan
+   runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4.1.2
+   steps:
+   - name: Checkout code
+     uses: actions/checkout@v2
 
-    - name: Setup Docker
-      uses: docker-practice/actions-setup-docker@v1
-      with:
-        docker_version: '20.10.25'
-    # # This additional code to encounter the errors that were faced during docker scan
-    # # ----------------------------------------------------------------------------------------
-    # - name: Download .deb Files
-    #   run: |
-    #     # Replace these URLs with the actual URLs to download your .deb files
-    #     wget http://example.com/path/to/libbind9-161.deb
-    #     wget http://example.com/path/to/libdns1104.deb
-    #     wget http://example.com/path/to/libisc1100.deb
-    #     wget http://example.com/path/to/libisccfg163.deb
-    #     wget http://example.com/path/to/liblwres161.deb
-    # # ----------------------------------------------------------------------------------------
-  
-    - name: Build Docker Image
-      run: docker build -f Dockerfile -t webapp:latest .
+   - name: Set up Docker
+     uses: docker-practice/actions-setup-docker@v1
+     with:
+      docker_version: '20.10.7'
 
-    - name: Docker Scout Scan
-      run: |
-        curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
-        sh install-scout.sh
-        echo ${{secrets.docker_hub_password}} | docker login -u ${{secrets.docker_hub_username}} --password-stdin
+   - name: Build Docker Image
+     run: docker build -f Dockerfile -t webapp:latest .
 
-        docker scout quickview
-        docker scout cves
+   - name: Docker Scout Scan
+     run: |
+       curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
+       sh install-scout.sh
+       echo ${{ secrets.REPO_PWD }} | docker login -u ${{ secrets.REPO_USER }} --password-stdin
+       docker scout quickview
+       docker scout cves
+
+  # image_scan:
+  #   name: Run Docker Image Scan
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout Code
+  #     uses: actions/checkout@v4.1.2
+
+  #   - name: Setup Docker
+  #     uses: docker-practice/actions-setup-docker@v1
+  #     with:
+  #       docker_version: '20.10.25'
+
+  #   - name: Build Docker Image
+  #     run: docker build -f Dockerfile -t webapp:latest .
+
+  #   - name: Docker Scout Scan
+  #     run: |
+  #       curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
+  #       sh install-scout.sh
+  #       echo ${{secrets.docker_hub_password}} | docker login -u ${{secrets.docker_hub_username}} --password-stdin
+
+  #       docker scout quickview
+  #       docker scout cves
 
         
         
