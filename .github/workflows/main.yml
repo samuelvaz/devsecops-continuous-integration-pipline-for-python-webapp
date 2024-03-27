@@ -38,8 +38,9 @@ jobs:
       uses: actions/checkout@v4.1.2
 
     - name: Setup Docker
-      uses: crazy-max/ghaction-setup-docker@v3.1.0
-
+      uses: docker-practice/actions-setup-docker@v1
+      with:
+        docker_version: '20.10.25'
     # # This additional code to encounter the errors that were faced during docker scan
     # # ----------------------------------------------------------------------------------------
     # - name: Download .deb Files
