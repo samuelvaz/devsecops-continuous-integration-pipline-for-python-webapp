@@ -48,33 +48,10 @@ jobs:
        curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
        sh install-scout.sh
        echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-       docker scout quickview
-       docker scout cves
+       docker scout quickview --only-serverity high, medium
+       docker scout cves --only-serverity high, medium
 
-  # image_scan:
-  #   name: Run Docker Image Scan
-  #   runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Checkout Code
-  #     uses: actions/checkout@v4.1.2
-
-  #   - name: Setup Docker
-  #     uses: docker-practice/actions-setup-docker@v1
-  #     with:
-  #       docker_version: '20.10.25'
-
-  #   - name: Build Docker Image
-  #     run: docker build -f Dockerfile -t webapp:latest .
-
-  #   - name: Docker Scout Scan
-  #     run: |
-  #       curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
-  #       sh install-scout.sh
-  #       echo ${{secrets.docker_hub_password}} | docker login -u ${{secrets.docker_hub_username}} --password-stdin
-
-  #       docker scout quickview
-  #       docker scout cves
 
         
         
