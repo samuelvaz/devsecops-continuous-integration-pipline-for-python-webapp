@@ -23,7 +23,7 @@ jobs:
       run: bandit -ll -ii -r . -f json -o py-webapp-ci-pipeline.json
 
     - name:  Upload Artifact
-      uses: actions/upload-artifact@v3.0.0
+      uses: echapmanFromBunnings/upload-artifact@3.0.0
       if: always()
       with:
         name: bandit-scan-findings
