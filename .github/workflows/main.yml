@@ -40,17 +40,17 @@ jobs:
     - name: Setup Docker
       uses: crazy-max/ghaction-setup-docker@v3.1.0
 
-    # This additional code to encounter the errors that were faced during docker scan
-    # ----------------------------------------------------------------------------------------
-    - name: Download .deb Files
-      run: |
-        # Replace these URLs with the actual URLs to download your .deb files
-        wget http://example.com/path/to/libbind9-161.deb
-        wget http://example.com/path/to/libdns1104.deb
-        wget http://example.com/path/to/libisc1100.deb
-        wget http://example.com/path/to/libisccfg163.deb
-        wget http://example.com/path/to/liblwres161.deb
-    # ----------------------------------------------------------------------------------------
+    # # This additional code to encounter the errors that were faced during docker scan
+    # # ----------------------------------------------------------------------------------------
+    # - name: Download .deb Files
+    #   run: |
+    #     # Replace these URLs with the actual URLs to download your .deb files
+    #     wget http://example.com/path/to/libbind9-161.deb
+    #     wget http://example.com/path/to/libdns1104.deb
+    #     wget http://example.com/path/to/libisc1100.deb
+    #     wget http://example.com/path/to/libisccfg163.deb
+    #     wget http://example.com/path/to/liblwres161.deb
+    # # ----------------------------------------------------------------------------------------
   
     - name: Build Docker Image
       run: docker build -f Dockerfile -t webapp:latest .
