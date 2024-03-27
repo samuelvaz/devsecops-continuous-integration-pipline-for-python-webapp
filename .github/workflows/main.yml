@@ -43,7 +43,7 @@ jobs:
         docker_version: '26.0'
 
     - name: Build Docker Image
-      run: docker build -f Dockerfile -t webapp:development
+      run: docker build -f Dockerfile -t webapp:development .
 
     - name: Docker Scout Scan
       run: |
