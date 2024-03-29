@@ -51,7 +51,7 @@ jobs:
        dockerhub-password: ${{ secrets.DOCKER_HUB_PASSWORD }}
        command: quickview,cves
        only-severities: critical,high
-       sarif-file: dockerScoutReport.csv
+       sarif-file: dockerScoutReport.json
        # exit-code: true
 
    - name: Uploading Artifact
@@ -59,7 +59,8 @@ jobs:
      if: always()
      with:
        name: docker-scout-findings
-       path: dockerScoutReport.csv
+       path: dockerScoutReport.json
+       
        
        
      
