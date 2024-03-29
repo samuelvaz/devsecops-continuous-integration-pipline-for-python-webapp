@@ -55,7 +55,7 @@ jobs:
        # exit-code: true
 
    - name: Uploading Artifact
-     uses: actions/checkout@v4.1.2
+     uses: actions/checkout@v4.3.1
      if: always()
      with:
        name: docker-scout-findings
